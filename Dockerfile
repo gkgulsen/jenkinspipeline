@@ -1,27 +1,11 @@
-# Base image
-FROM node:16.10.0-alpine3.13 as build-stage
-
-# Set the working directory
+FROM node:14 AS build
 WORKDIR /app
-
-# Copy package.json and package-lock.json
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code
 COPY . .
-
-# Build the Vue.js application
+RUN npm install
 RUN npm run build
 
-FROM nginx:stable-alpine as production-stage
-
-COPY --from=build-stage /app/dist /usr/share/nginx/html
-
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-
+# Stage 2: Nginx ile dağıtım için hafif bir imaj
+FROM nginx:1.21
+COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
-
 CMD ["nginx", "-g", "daemon off;"]
