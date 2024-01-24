@@ -6,7 +6,7 @@ pipeline {
             steps {
                 // Checkout your Vue.js project from version control
                 // Replace the placeholder with your version control commands
-                sh 'git clone <repository_url>'
+                sh 'git clone https://github.com/gkgulsen/jenkinspipeline.git'
             }
         }
         
