@@ -1,5 +1,9 @@
 pipeline {
     agent any
+     options {
+        // Bu, Docker içinde root kullanıcısı olarak çalışmayı sağlar
+        docker.imagePlatform('linux/amd64')
+    }
 
     environment {
         PATH = "/usr/local/bin:${env.PATH}"		
