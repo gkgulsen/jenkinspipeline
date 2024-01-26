@@ -10,8 +10,8 @@ pipeline {
     stages {        
 
         stage('Build') {
-            steps {
-              
+            steps {              
+                sh 'apt-get update && apt-get install -y npm'
                 sh 'npm install'
                 sh 'npm run build'
             }
