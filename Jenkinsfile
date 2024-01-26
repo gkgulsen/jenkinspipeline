@@ -5,7 +5,7 @@ pipeline {
 
     environment {
         PATH = "/usr/local/bin:${env.PATH}"		
-        DOCKER_HUB_CREDENTIALS = credentials('PIPELINE_SECRET_TEXT')
+        DOCKER_HUB_CREDENTIALS = credentials('dockerhub_id')
         DOCKER_IMAGE = 'gkadirgil/vuejs-app-2' 
     }
 
