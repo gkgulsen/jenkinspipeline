@@ -1,6 +1,6 @@
 pipeline {
     agent any
-   
+    tools {nodejs "nodejs"}
 
     environment {
         PATH = "/usr/local/bin:${env.PATH}"		
@@ -12,7 +12,7 @@ pipeline {
 
         stage('Build') {
             steps {              
-                sh 'sudo apt-get update && apt-get install -y npm'
+                
                 sh 'npm install'
                 sh 'npm run build'
             }
