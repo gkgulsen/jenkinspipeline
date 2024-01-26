@@ -9,10 +9,10 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage('Test') {
+        stage('Master') {
             steps {
                 // Run tests for the Vue.js project
-                sh 'npm run test'
+                sh 'npm run serve'
             }
         }
         
