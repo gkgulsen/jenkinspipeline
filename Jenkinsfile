@@ -1,6 +1,7 @@
 pipeline {
     agent any
-    tools {nodejs "nodejs"}
+	
+	tools { nodejs "node"}
 
     environment {
         PATH = "/usr/local/bin:${env.PATH}"		
@@ -11,8 +12,8 @@ pipeline {
     stages {        
 
         stage('Build') {
-            steps {              
-                
+            steps {
+              
                 sh 'npm install'
                 sh 'npm run build'
             }
