@@ -19,17 +19,7 @@ pipeline {
             }
         }       
 
-        stage('Deploy') {
-            steps {
-                
-                script {
-                    docker.withRegistry('', DOCKER_HUB_CREDENTIALS) {                        
-                        def customImage = docker.build(DOCKER_IMAGE, '-f path/to/Dockerfile ./')                        
-                        customImage.push()
-                    }
-                }
-            }
-        }
+        
     }
 
     post {
