@@ -20,6 +20,10 @@ pipeline {
         }
 	    stage('Deploy our image') {
 steps{
+	script {
+    sh 'docker build -t gkadirgil/vue-app-new:latest .'
+}
+
 script {
 docker.withRegistry( '', registryCredential ) {
 dockerImage.push()
