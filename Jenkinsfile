@@ -4,6 +4,7 @@ pipeline {
 	tools { nodejs "node"}
 
     environment {
+	    PATH = "/usr/local/bin:${env.PATH}"
         registry = "gkadirgil/vue-app-new"
 	registryCredential = 'dockerhub_id'
 	dockerImage = ''
