@@ -1,9 +1,6 @@
 pipeline {
     agent any
-     options {
-        // Bu, Docker içinde root kullanıcısı olarak çalışmayı sağlar
-        docker.imagePlatform('linux/amd64')
-    }
+   
 
     environment {
         PATH = "/usr/local/bin:${env.PATH}"		
@@ -15,7 +12,7 @@ pipeline {
 
         stage('Build') {
             steps {              
-                sh 'apt-get update && apt-get install -y npm'
+                sh 'sudo apt-get update && apt-get install -y npm'
                 sh 'npm install'
                 sh 'npm run build'
             }
