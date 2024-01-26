@@ -4,9 +4,9 @@ pipeline {
 	tools { nodejs "node"}
 
     environment {
-        PATH = "/usr/local/bin:${env.PATH}"		
-        DOCKER_HUB_CREDENTIALS = credentials('dockerhub_id')
-        DOCKER_IMAGE = 'gkadirgil/vuejs-app-2' 
+        registry = "gkadirgil/vue-app-new"
+	registryCredential = 'dockerhub_id'
+	dockerImage = ''
     }
 
     stages {        
@@ -17,7 +17,16 @@ pipeline {
                 sh 'npm install'
                 sh 'npm run build'
             }
-        }       
+        }
+	    stage('Deploy our image') {
+steps{
+script {
+docker.withRegistry( '', registryCredential ) {
+dockerImage.push()
+}
+}
+}
+}
 
         
     }
