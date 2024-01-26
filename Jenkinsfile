@@ -1,21 +1,43 @@
 pipeline {
     agent any
-    tools { nodejs "node"}
-    stages {
-        stage('Install Dependencies') {
+
+    environment {
+        PATH = "/usr/local/bin:${env.PATH}"		
+        DOCKER_HUB_CREDENTIALS = credentials('PIPELINE_SECRET_TEXT')
+        DOCKER_IMAGE = 'gkadirgil/vuejs-app-2' 
+    }
+
+    stages {        
+
+        stage('Build') {
             steps {
-                // Checkout your Vue.js project from version control
-                // Replace the placeholder with your version control commands
+              
                 sh 'npm install'
+                sh 'npm run build'
             }
-        }
-        stage('Master') {
+        }       
+
+        stage('Deploy') {
             steps {
-                // Run tests for the Vue.js project
-                sh 'npm run serve'
+                
+                script {
+                    docker.withRegistry('', DOCKER_HUB_CREDENTIALS) {                        
+                        def customImage = docker.build(DOCKER_IMAGE, '-f path/to/Dockerfile ./')                        
+                        customImage.push()
+                    }
+                }
             }
         }
-        
-      
+    }
+
+    post {
+        success {
+            
+            echo 'Build and deployment succeeded!'
+        }
+        failure {
+            
+            echo 'Build or deployment failed!'
+        }
     }
 }
