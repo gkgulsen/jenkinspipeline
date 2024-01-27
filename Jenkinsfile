@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        PATH = "/path/to/nodejs/bin:${env.PATH}"
+   
         PATH = "/usr/local/bin:${env.PATH}"
         DOCKER_HUB_CREDENTIALS = credentials('dockerhub_id')
         DOCKER_IMAGE = 'gkadirgil/vuejs-projem'  // Docker Hub kullanıcı adınızı ekleyin
