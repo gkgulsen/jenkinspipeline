@@ -1,35 +1,35 @@
 pipeline {
     agent any
 
+    tools { nodejs 'node' }
+
     environment {
-   
-        PATH = "/usr/local/bin:${env.PATH}"
-        DOCKER_HUB_CREDENTIALS = credentials('dockerhub_id')
-        DOCKER_IMAGE = 'gkadirgil/vuejs-projem'  // Docker Hub kullanıcı adınızı ekleyin
+        registry = 'gkadirgil/vue-app-new'
+        registryCredential = 'dockerhub_id'
+        dockerImage = ''
     }
 
     stages {
         stage('Build') {
             steps {
-                script {
-                    // Vue.js projesini build et
-                    sh 'npm install'
-                    sh 'npm run build'
-                }
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
-
-        stage('Deploy') {
+        stage('Deploy our image') {
             steps {
                 script {
-                    // Docker Hub'a imajı gönder
-                    docker.withRegistry('', DOCKER_HUB_CREDENTIALS) {
-                        def customImage = docker.build(DOCKER_IMAGE, '.')
-                        customImage.push()
+                    sh 'docker build -t gkadirgil/vue-app-new:latest .'
+                }
+
+                script {
+                    docker.withRegistry('', registryCredential) {
+                        dockerImage.push()
                     }
                 }
             }
         }
+
     }
 
     post {
